@@ -3,52 +3,422 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World Deployment</title>
+    <title>Windows XP</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: "Tahoma", "Arial", sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #245edc 0%, #3b7de0 100%);
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Taskbar */
+        .taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: linear-gradient(to bottom, #3a7bd8, #245edc);
+            border-top: 2px solid #5b9cf5;
             display: flex;
-            justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            padding: 0 5px;
+            z-index: 1000;
         }
-        .container {
+
+        .start-button {
+            background: linear-gradient(to bottom, #7ebf00, #5a8f00);
+            border: 1px solid #3a6600;
+            border-radius: 3px;
+            color: white;
+            padding: 5px 15px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            margin-right: 10px;
+            box-shadow: inset 1px 1px 0 #9ed200;
+        }
+
+        .start-button:hover {
+            background: linear-gradient(to bottom, #8ecf10, #6a9f10);
+        }
+
+        .taskbar-items {
+            display: flex;
+            gap: 5px;
+            flex: 1;
+        }
+
+        .taskbar-item {
+            background: linear-gradient(to bottom, #6ba3e0, #3a7bd8);
+            border: 1px solid #2a5bb0;
+            border-radius: 3px;
+            padding: 5px 15px;
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+            box-shadow: inset 1px 1px 0 #8cbdf0;
+        }
+
+        .clock {
+            color: white;
+            font-size: 12px;
+            padding: 0 10px;
+        }
+
+        /* Desktop Icons */
+        .desktop {
+            padding: 20px;
+            height: calc(100vh - 40px);
+        }
+
+        .desktop-icon {
+            width: 70px;
             text-align: center;
+            margin: 10px;
+            cursor: pointer;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+            font-size: 12px;
+        }
+
+        .desktop-icon img {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 5px;
+        }
+
+        .desktop-icons {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        /* Window */
+        .window {
+            position: absolute;
+            top: 50px;
+            left: 100px;
+            width: 400px;
+            background: #ece9d8;
+            border: 2px solid #003c74;
+            border-radius: 0;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.3);
+        }
+
+        .window-header {
+            background: linear-gradient(to bottom, #0a246a, #245edc);
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: move;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 3px;
+        }
+
+        .window-control {
+            width: 16px;
+            height: 14px;
+            background: #c0c0c0;
+            border: 1px solid #808080;
+            font-size: 10px;
+            text-align: center;
+            line-height: 12px;
+            cursor: pointer;
+        }
+
+        .window-content {
+            padding: 20px;
+            font-size: 12px;
+        }
+
+        /* Start Menu */
+        .start-menu {
+            position: fixed;
+            bottom: 40px;
+            left: 0;
+            width: 300px;
+            background: #ece9d8;
+            border: 2px solid #003c74;
+            display: none;
+        }
+
+        .start-menu-header {
+            background: linear-gradient(to bottom, #0a246a, #245edc);
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+        }
+
+        .start-menu-items {
+            padding: 10px 0;
+        }
+
+        .start-menu-item {
+            padding: 8px 20px;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .start-menu-item:hover {
+            background: #316ac5;
+            color: white;
+        }
+
+        /* Classic XP Elements */
+        .button {
+            background: linear-gradient(to bottom, #ece9d8, #d6d3c8);
+            border: 1px solid #808080;
+            padding: 3px 15px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background: linear-gradient(to bottom, #e1f0ff, #cde6ff);
+        }
+
+        input, select, textarea {
+            border: 1px solid #808080;
             background: white;
-            padding: 3rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        h1 {
-            color: #333;
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-        p {
-            color: #666;
-            font-size: 1.2rem;
-        }
-        .deploy-info {
-            margin-top: 2rem;
-            padding: 1rem;
-            background: #f8f9fa;
-            border-radius: 8px;
-            font-family: monospace;
+            padding: 2px;
+            font-size: 11px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🚀 Hello World!</h1>
-        <p>This page was deployed using GitHub Actions</p>
-        <div class="deploy-info">
-            Deployed via GitHub Pages<br>
-            Repository: ${{ github.repository }}<br>
-            Commit: ${{ github.sha }}
+    <!-- Desktop -->
+    <div class="desktop">
+        <div class="desktop-icons">
+            <div class="desktop-icon" onclick="openWindow('my-computer')">
+                <div>🖥️</div>
+                <span>My Computer</span>
+            </div>
+            <div class="desktop-icon" onclick="openWindow('recycle-bin')">
+                <div>🗑️</div>
+                <span>Recycle Bin</span>
+            </div>
+            <div class="desktop-icon" onclick="openWindow('my-documents')">
+                <div>📁</div>
+                <span>My Documents</span>
+            </div>
         </div>
     </div>
+
+    <!-- My Computer Window -->
+    <div id="my-computer" class="window" style="display: none;">
+        <div class="window-header">
+            <span>My Computer</span>
+            <div class="window-controls">
+                <div class="window-control" onclick="minimizeWindow('my-computer')">_</div>
+                <div class="window-control" onclick="closeWindow('my-computer')">×</div>
+            </div>
+        </div>
+        <div class="window-content">
+            <p>Local Disk (C:)</p>
+            <p>CD Drive (D:)</p>
+            <p>Floppy Drive (A:)</p>
+            <br>
+            <button class="button" onclick="closeWindow('my-computer')">OK</button>
+        </div>
+    </div>
+
+    <!-- Start Menu -->
+    <div class="start-menu" id="startMenu">
+        <div class="start-menu-header">
+            Windows XP
+        </div>
+        <div class="start-menu-items">
+            <div class="start-menu-item" onclick="openWindow('my-computer')">
+                <span>🖥️</span>
+                <span>My Computer</span>
+            </div>
+            <div class="start-menu-item" onclick="openWindow('my-documents')">
+                <span>📁</span>
+                <span>My Documents</span>
+            </div>
+            <div class="start-menu-item">
+                <span>🎵</span>
+                <span>Windows Media Player</span>
+            </div>
+            <div class="start-menu-item">
+                <span>🌐</span>
+                <span>Internet Explorer</span>
+            </div>
+            <div class="start-menu-item">
+                <span>⚙️</span>
+                <span>Control Panel</span>
+            </div>
+            <div class="start-menu-item">
+                <span>❓</span>
+                <span>Help and Support</span>
+            </div>
+            <div class="start-menu-item">
+                <span>🔍</span>
+                <span>Search</span>
+            </div>
+            <div class="start-menu-item">
+                <span>▶️</span>
+                <span>Run...</span>
+            </div>
+            <div class="start-menu-item" onclick="shutdown()">
+                <span>⭕</span>
+                <span>Turn Off Computer</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Taskbar -->
+    <div class="taskbar">
+        <button class="start-button" onclick="toggleStartMenu()">Start</button>
+        <div class="taskbar-items">
+            <div class="taskbar-item">My Computer</div>
+            <div class="taskbar-item">Internet Explorer</div>
+        </div>
+        <div class="clock" id="clock">10:41 AM</div>
+    </div>
+
+    <script>
+        // Update clock
+        function updateClock() {
+            const now = new Date();
+            const time = now.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: true 
+            });
+            document.getElementById('clock').textContent = time;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Start menu functionality
+        function toggleStartMenu() {
+            const startMenu = document.getElementById('startMenu');
+            startMenu.style.display = startMenu.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Window management
+        function openWindow(windowId) {
+            document.getElementById(windowId).style.display = 'block';
+            document.getElementById('startMenu').style.display = 'none';
+        }
+
+        function closeWindow(windowId) {
+            document.getElementById(windowId).style.display = 'none';
+        }
+
+        function minimizeWindow(windowId) {
+            document.getElementById(windowId).style.display = 'none';
+        }
+
+        // Shutdown simulation
+        function shutdown() {
+            document.body.innerHTML = `
+                <div style="
+                    background: linear-gradient(135deg, #245edc 0%, #3b7de0 100%);
+                    height: 100vh;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    color: white;
+                    font-family: Tahoma;
+                ">
+                    <div style="font-size: 24px; margin-bottom: 20px;">Windows is shutting down...</div>
+                    <div style="width: 300px; height: 20px; background: #003c74; border-radius: 10px; overflow: hidden;">
+                        <div id="progress" style="height: 100%; background: #7ebf00; width: 0%; transition: width 2s;"></div>
+                    </div>
+                </div>
+            `;
+            
+            setTimeout(() => {
+                document.getElementById('progress').style.width = '100%';
+            }, 100);
+            
+            setTimeout(() => {
+                document.body.innerHTML = `
+                    <div style="
+                        background: black;
+                        height: 100vh;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        color: white;
+                        font-family: 'Courier New';
+                        font-size: 14px;
+                    ">
+                        <div>It's now safe to turn off your computer.</div>
+                    </div>
+                `;
+            }, 2500);
+        }
+
+        // Close start menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const startMenu = document.getElementById('startMenu');
+            const startButton = document.querySelector('.start-button');
+            
+            if (!startMenu.contains(event.target) && !startButton.contains(event.target)) {
+                startMenu.style.display = 'none';
+            }
+        });
+
+        // Make windows draggable
+        function makeDraggable(element) {
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            const header = element.querySelector('.window-header');
+            
+            header.onmousedown = dragMouseDown;
+
+            function dragMouseDown(e) {
+                e = e || window.event;
+                e.preventDefault();
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = closeDragElement;
+                document.onmousemove = elementDrag;
+            }
+
+            function elementDrag(e) {
+                e = e || window.event;
+                e.preventDefault();
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                element.style.top = (element.offsetTop - pos2) + "px";
+                element.style.left = (element.offsetLeft - pos1) + "px";
+            }
+
+            function closeDragElement() {
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+        }
+
+        // Initialize draggable windows
+        document.querySelectorAll('.window').forEach(window => {
+            makeDraggable(window);
+        });
+    </script>
 </body>
 </html>
